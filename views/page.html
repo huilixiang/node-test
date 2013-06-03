@@ -1,0 +1,41 @@
+<!doctype html>  
+<html dir="ltr" lang="en-US">
+	<head>
+
+		<title>jqPagination, a jQuery pagination plugin (obviously)</title>
+	
+	
+		<!-- jqPagination styles -->
+		<link rel="stylesheet" href="stylesheets/jqpagination.css" type="text/css" media="screen" />
+		
+		<!-- scripts -->
+		<script src="javascripts/jquery-1.9.0.js" type="text/javascript"></script>
+	<script type="text/javascript" src="javascripts/jquery.jqpagination.js"></script>
+	<script type="text/javascript" src="javascripts/scripts.js"></script>
+	
+		
+		<!-- shiv me up baby! -->
+		<!--[if lt IE 9]>
+			<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+		
+	</head>
+	<body>
+
+			<div class="gigantic pagination">
+			    <a href="#" class="first" data-action="first">&laquo;</a>
+			    <a href="#" class="previous" data-action="previous">&lsaquo;</a>
+			    <input type="text" readonly="readonly" />
+			    <a href="#" class="next" data-action="next">&rsaquo;</a>
+			    <a href="#" class="last" data-action="last">&raquo;</a>
+			</div>
+
+<pre>$('.pagination').jqPagination({
+    paged: function(page) {
+        // do something with the page variable
+    }
+});</pre>
+			
+
+	</body>
+</html>
