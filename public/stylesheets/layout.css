@@ -655,7 +655,7 @@ text-align: left;
 padding: 5px 0;
 }
 
-.post_message input[type=text] {
+.post_message input[type=text]  {
 -webkit-border-radius: 5px;
 -moz-border-radius: 5px;
 border-radius: 5px;
@@ -716,7 +716,7 @@ text-transform: uppercase;
 clear:both;
 }
 
-fieldset input[type=text] {
+fieldset input[type=text]  , input[type=password]{
 -webkit-border-radius: 5px;
 -moz-border-radius: 5px;
 border-radius: 5px;

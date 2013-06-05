@@ -18,13 +18,17 @@ var express = require('express')
   
 
 var app = express();
-app.engine('html', require('ejs').renderFile);
+
 
 app.configure(function(){
   app.set('port',80);
   app.set('views', __dirname + '/views');
+  app.set('view engine', 'ejs');
   app.use(express.favicon());
   app.use(express.logger('dev'));
+  app.use(express.cookieParser());
+  app.use(express.session({secret:'ifelseother2b36z'}));
+  //app.use(express.csrf());
   app.use(express.bodyParser({
         uploadDir: __dirname + '/uploadfs'
   }));
@@ -38,7 +42,8 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
-app.get('/', routes.index);
+app.get('/', user.index);
+
 app.get('/admin.html', routes.admin);
 app.get('/page.html', routes.page);
 //company
@@ -46,15 +51,19 @@ app.post('/newcompany.node', company.newCompany);
 app.get('/queryallcompany.node' , company.queryAll);
 app.post('/query_paged_company.node' , company.pagedQuery);
 app.post('/company_upload.node' , company.fileUploader);
+
 //user
+app.get('/logout.node' , user.logout);
 app.post('/newemployee.node' , user.newEmployee);
 app.post('/queryalluser.node' , user.queryAll);
+app.post('/signin.node' , user.signin);
 //purchase
 app.post('/newpurchase.node' , purchaseOrder.newPurchase);
 app.post('/purchase_upload.node', purchaseOrder.purchasefileUploader);
 app.post('/query_purchase.node', purchaseOrder.queryPurchase);
 app.post('/query_unpaied_purchase.node' , purchaseOrder.queryUnpaied);
 app.get('/query_purchase_buyers.node' , purchaseOrder.findAllBuyer);
+app.get('/purchase_sta.node' , purchaseOrder.statisticEnter);
 
 
 //sale
@@ -63,12 +72,13 @@ app.post('/querysale.node' , sellOrder.query);
 app.post('/query_unreceived_sale.node' , sellOrder.queryUnreceived);
 app.post('/sale_statistic_upload.node' , sellOrder.saleFileUploader);
 app.get('/query_sell_shipment_cmp.node' , sellOrder.queryShipmentCmp);
+app.get('/sell_sta.node' , sellOrder.statisticExit);
 
 //app.get('/whocollect-gather/GatherServlet' , gather.log);
 
 app.post('/repertory_upload.node' , repertory.repertoryFileUpload);
 app.post('/query_repertory.node' , repertory.queryRepertory);
-
+app.get('/repo_stat.node' , repertory.statistic);
 
 app.post('/query_ansell_glove_repertory.node' , repertory.queryAnsellGloveRepertory);
 app.post('/ansell_glove_upload.node' , repertory.ansellGloveFileUpload);

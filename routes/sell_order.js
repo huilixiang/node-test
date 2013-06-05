@@ -5,7 +5,8 @@
  * GET users listing.
  */
 var SellOrderProvider = require('../dao/sell_order_provider').SellOrderProvider, 
-        fs = require('fs')	, readline = require('readline') , XLSX = require("xlsx") , MyDateUtil=require("../util/date_util.js");
+        fs = require('fs')	, readline = require('readline') , XLSX = require("xlsx") ,
+       MyDateUtil=require("../util/date_util.js");
 
 var sellOrderProvider = new SellOrderProvider();
 
@@ -17,6 +18,18 @@ var colMapArray = {"发货日期":"shipmentDate" , "出货单位":"shipmentCmp",
    			"收货人电话":"receiverPhone","收货地址":"receiverAddress" , "运单号":"transpotOrder", "税票号":"taxOrder" ,
    			"税票金额":"taxAmount" , "出票时间":"makeInvoiceTime" , "发票快递单号":"invoiceExpressOrder" , 
    			"来源":"source" , "备注":"description" , "类别":"category" , "销售员":"salesman" };
+
+exports.statisticExit=function(req, res) {
+    sellOrderProvider.statisticExitRecord(function(error , results){
+            if(error) {
+                res.send(error);
+            } else {
+                res.json(results);
+            }
+        }
+    );
+}
+
 
 exports.query = function(req , res) {
 	var page = req.body.page;

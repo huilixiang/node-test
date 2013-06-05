@@ -1,6 +1,8 @@
 /**
  * New node file
  */
+
+var jgpattern =/^[A-Za-z0-9]+$/;
 //新增用户
 function newEmployee() {
     var username = $("#new_employee_form input[name=username]").val();
@@ -8,8 +10,22 @@ function newEmployee() {
 	var address = $("#new_employee_form input[name=address]").val(); 
 	var mobilePhone = $("#new_employee_form input[name=mobilephone]").val(); 
 	var email = $("#new_employee_form input[name=email]").val();
-	var company = $("#new_employee_form input[name=company]").val();
-	
+    //var company = $("#new_employee_form input[name=company]").val();
+    var role = $("#roleselector").val();
+    var password = $("#password").val();
+    var repassword = $("#repassword").val();
+    if(password == null) {
+        alert("请填写密码");
+        return ;
+    }
+    if(!jgpattern.test(password)) {
+        alert("密码只能为字母或数字");
+        return ;
+    }
+    if(password != repassword) {
+        alert("再次输入的密码不一致");
+        return ;
+    }
    $.post(
    		"/newemployee.node",
    		{ username : username , 
@@ -17,7 +33,8 @@ function newEmployee() {
    		  address: address, 
    		  mobilephone:mobilePhone,
    		  email:email,
-   		  company:company
+   		  role:role,
+          password : password
    		},
    		function(data) {
    			if(data == 'success') {

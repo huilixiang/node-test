@@ -78,19 +78,21 @@ function showUser() {
 				method: 'post',
 				dataType: 'json',
 				colModel : [
-					{display: '用户名', name : 'username', width:110, sortable : true, align: 'left'},
-					{display: '所在公司', name : 'company', width:130,  sortable : true, align: 'left'},
-					{display: '电话', name : 'telephone',  width:120, sortable : true, align: 'left'},
-					{display: '手机', name : 'mobilephone',  width:130, sortable : true, align: 'left'},
-					{display: '地址', name : 'address', width:130,  sortable : true, align: 'left'},
-					{display: '邮箱', name : 'address', width:130,  sortable : true, align: 'left'},
-					{display: '操作', name : 'email',  width:130, sortable : true, align: 'left'}
+					{display: '用户名', name : 'username', width:113, sortable : true, align: 'left'},
+					{display: '所在公司', name : 'company',width:113,  sortable : true, align: 'left'},
+					{display: '电话', name : 'telephone', width:113, sortable : true, align: 'left'},
+					{display: '手机', name : 'mobilephone',width:143,sortable : true, align: 'left'},
+					{display: '地址', name : 'address', width:143, sortable : true, align: 'left'},
+					{display: '邮箱', name : 'email',width:143,  sortable : true, align: 'left'},
+                    {display: '角色', name : 'role',width:143,  sortable : true, align: 'left'},
+                    {display: 'id', name : '_id',  sortable : true, align: 'left' , hide:true}
 					],
 			    /**
 				searchitems : [
 				       		{display: '时间', name : 'createDate', isdefault: true}
 				       		],
 				**/
+                singleSelect: true,
 				pagestat:'显示 {from} to {to} of {total} 记录',
 				usepager: true,
 				title: '用户列表',
@@ -219,13 +221,15 @@ function querySaleStatistic(url0 , paramarray) {
 					{display: '来源', name : 'source',  sortable : true, align: 'left'},
 					{display: '备注', name : 'description',  sortable : true, align: 'left'},
 					{display: '类别', name : 'category',  sortable : true, align: 'left'},
-					{display: '销售员', name : 'salesman',  sortable : true, align: 'left'}
+					{display: '销售员', name : 'salesman',  sortable : true, align: 'left'}  ,
+                    {display: 'id', name : '_id',  sortable : true, align: 'left' , hide:true}
 					],
 			    /**
 				searchitems : [
 				       		{display: '出货单位', name : 'shipmentCmp', isdefault: true}
 				       		],
 				**/
+                singleSelect: true,
 				pagestat:'显示 {from} to {to} of {total} 记录',
 				usepager: true,
 				title: '销售订单列表',
@@ -275,13 +279,15 @@ function showCompany() {
 					{display: '传真', name : 'fax', width : 80, sortable : true, align: 'left'},
 					{display: '邮编', name : 'email', width : 80, sortable : true, align: 'left'},
 					{display: '其它', name : 'other', width : 80, sortable : true, align: 'left'},
-					{display: '备注', name : 'description', width : 80, sortable : true, align: 'left'}
+					{display: '备注', name : 'description', width : 80, sortable : true, align: 'left'},
+                    {display: 'id', name : '_id',  sortable : true, align: 'left' , hide:true}
 					],
 			    /**
 				searchitems : [
 				       		{display: '时间', name : 'createDate', isdefault: true}
 				       		],
 				**/
+                singleSelect: true,
 				pagestat:'显示 {from} to {to} of {total} 记录',
 				usepager: true,
 				title: '用户列表',
@@ -310,13 +316,15 @@ function showRepertory() {
 					{display: '成本单价', name : 'actualCostPerUnit', width : 100, sortable : true, align: 'left'},
 					{display: '总成本', name : 'totalCost', width : 100, sortable : true, align: 'left'},
 					{display: '市场价', name : 'marketPrice', width : 100, sortable : true, align: 'left'},
-					{display: '备注', name : 'other', width : 100, sortable : true, align: 'left'}
+					{display: '备注', name : 'other', width : 100, sortable : true, align: 'left'} ,
+                    {display: 'id', name : '_id',  sortable : true, align: 'left' , hide:true}
 					],
 			    /**
 				searchitems : [
 				       		{display: '时间', name : 'createDate', isdefault: true}
 				       		],
 				**/
+                singleSelect: true,
 				pagestat:'显示 {from} to {to} of {total} 记录',
 				usepager: true,
 				title: '库存',
@@ -343,13 +351,15 @@ function showAnsellGloveRepertory() {
 					{display: '型号', name : 'model', width : 80, sortable : true, align: 'left'},
 					{display: '库存数', name : 'amount', width : 80, sortable : true, align: 'left'},
 					{display: '成本单价', name : 'actualCostPerUnit', width : 80, sortable : true, align: 'left'},
-					{display: '总成本', name : 'totalCost', width : 80, sortable : true, align: 'left'}
+					{display: '总成本', name : 'totalCost', width : 80, sortable : true, align: 'left'}  ,
+                    {display: 'id', name : '_id',  sortable : true, align: 'left' , hide:true}
 					],
 			    /**
 				searchitems : [
 				       		{display: '时间', name : 'createDate', isdefault: true}
 				       		],
 				**/
+                singleSelect: true,
 				pagestat:'显示 {from} to {to} of {total} 记录',
 				usepager: true,
 				useRp: true,
@@ -379,13 +389,15 @@ function showSampleFlow(){
 					{display: '备注', name : 'other', width : 200, sortable : true, align: 'left'},
 					{display: '类别', name : 'category', width : 120, sortable : true, align: 'left'},
 					{display: '业务员', name : 'operator', width : 80, sortable : true, align: 'left'},
-					{display: '描述', name : 'desc', width : 80, sortable : true, align: 'left'}
+					{display: '描述', name : 'desc', width : 80, sortable : true, align: 'left'} ,
+                    {display: 'id', name : '_id',  sortable : true, align: 'left' , hide:true}
 					],
 			    /**
 				searchitems : [
 				       		{display: '时间', name : 'createDate', isdefault: true}
 				       		],
 				**/
+                singleSelect: true,
 				pagestat:'显示 {from} to {to} of {total} 记录',
 				usepager: true,
 				useRp: true,
@@ -413,13 +425,15 @@ hideAll();
 					{display: '单位', name : 'unit', width : 80, sortable : true, align: 'left'},
 					{display: '备注', name : 'other', width : 200, sortable : true, align: 'left'},
 					{display: '是否归还', name : 'hasRestored', width : 80, sortable : true, align: 'left'},
-					{display: '销售员', name : 'seller', width : 80, sortable : true, align: 'left'}
+					{display: '销售员', name : 'seller', width : 80, sortable : true, align: 'left'}   ,
+                    {display: 'id', name : '_id',  sortable : true, align: 'left' , hide:true}
 					],
 			    /**
 				searchitems : [
 				       		{display: '时间', name : 'createDate', isdefault: true}
 				       		],
 				**/
+                singleSelect: true,
 				pagestat:'显示 {from} to {to} of {total} 记录',
 				usepager: true,
 				useRp: true,
@@ -486,13 +500,15 @@ function purchaseStatistic(){
 					{display: '税票金额', name : 'invoiceMoney',  sortable : true, align: 'left'},
 					{display: '收票时间', name : 'receiveInvoiceTime',  sortable : true, align: 'left'},
 					{display: '备注', name : 'description',  sortable : true, align: 'left'},
-					{display: '快递', name : 'express',  sortable : true, align: 'left'}
+					{display: '快递', name : 'express',  sortable : true, align: 'left'} ,
+                    {display: 'id', name : '_id',  sortable : true, align: 'left' , hide:true}
 					],
 			    /**
 				searchitems : [
 				       		{display: '时间', name : 'createDate', isdefault: true}
 				       		],
 				**/
+                singleSelect: true,
 				usepager: true,
 				pagestat:'显示 {from} to {to} of {total} 记录',
 				title: '采购单列表',
@@ -618,13 +634,15 @@ function showAccountReceivableStatistic() {
 					{display: '来源', name : 'source',  sortable : true, align: 'left' , hide:true},
 					{display: '备注', name : 'description',  sortable : true, align: 'left' , hide:true},
 					{display: '类别', name : 'category',  sortable : true, align: 'left' , hide:true},
-					{display: '销售员', name : 'salesman',  sortable : true, align: 'left' , hide:true}
+					{display: '销售员', name : 'salesman',  sortable : true, align: 'left' , hide:true}   ,
+                    {display: 'id', name : '_id',  sortable : true, align: 'left' , hide:true}
 					],
 			    /**
 				searchitems : [
 				       		{display: '出货单位', name : 'shipmentCmp', isdefault: true}
 				       		],
 				**/
+                singleSelect: true,
 				usepager: true,
 				title: '应收帐款列表',
 				useRp: true,
@@ -697,12 +715,13 @@ function showAccountPayableStatistic() {
             {display: '税票金额', name : 'invoiceMoney',  sortable : true, align: 'left' , hide:true},
             {display: '收票时间', name : 'receiveInvoiceTime',  sortable : true, align: 'left' , hide:true},
             {display: '备注', name : 'description',  sortable : true, align: 'left' , hide:true},
-            {display: '快递', name : 'express',  sortable : true, align: 'left' , hide:true}
+            {display: '快递', name : 'express',  sortable : true, align: 'left' , hide:true} ,
+            {display: 'id', name : '_id',  sortable : true, align: 'left' , hide:true}
         ],
         buttons : [
-            {name: '删除', bclass: 'delete', onpress : test},
+            {name: '删除', bclass: 'delete', onpress : doCommand},
             {separator: true},
-            {name: '付款', bclass: 'modify', onpress : test},
+            {name: '付款', bclass: 'edit', onpress : doCommand},
             {separator: true}
         ],
         /**
@@ -710,6 +729,7 @@ function showAccountPayableStatistic() {
          {display: '出货单位', name : 'shipmentCmp', isdefault: true}
          ],
          **/
+        singleSelect: true,
         usepager: true,
         title: '待付款列表',
         useRp: true,
@@ -722,8 +742,28 @@ function showAccountPayableStatistic() {
 }
 
 
-function test() {
+function doCommand(com, grid) {
+    if (com == '付款') {
+        $('.trSelected', grid).each(function() {
+            $(this).children("td").each(function(){
+                var abbr = $(this).attr('abbr');
+                if(abbr == '_id') {
+                    alert($(this).children().first().html());
+                }
+            });
 
-    alert("hello");
+        });
+    } else if (com == '删除') {
+        $('.trSelected', grid).each(function() {
+            $(this).children("td").each(function(){
+                var abbr = $(this).attr('abbr');
+                if(abbr == '_id') {
+                    alert($(this).children().first().html());
+                }
+            });
+        });
+    }
 }
+
+
 

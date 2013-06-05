@@ -10,6 +10,16 @@ var PurchaseOrderProvider = require('../dao/purchase_order_provider').PurchaseOr
 var purchaseOrderProvider = new PurchaseOrderProvider();
 
 
+exports.statisticEnter=function(req, res) {
+    purchaseOrderProvider.statisticEnterRecord(function(error , results){
+           if(error) {
+               res.send(error);
+           } else {
+               res.json(results);
+           }
+        }
+    );
+}
 
 exports.queryUnpaied = function(req , res) {
     var page = req.body.page;

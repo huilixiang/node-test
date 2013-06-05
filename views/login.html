@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>后台</title>
+<link href="stylesheets/style-login.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="" />
+</head>
+
+<body>
+<div id="box">
+<div class="elements">
+<div class="avatar"></div>
+<form action="/signin.node" method="post">
+<input type="text" name="username" class="username" placeholder="用户名" />
+<input type="password" name="password" class="password" placeholder="密码" />
+<div class="forget"><a href="#">忘记密码?</a></div>
+<div class="checkbox">
+<input id="check" name="checkbox" type="checkbox" value="1" />
+<label for="check">Remember?</label>
+</div>
+<div class="remember">记住密码?</div>
+<input type="submit" name="submit" class="submit" value="登陆" />
+</form>
+</div>
+</div>
+<!--
+<div class="signup">没有注册?  <a href="#">Sign up now!</a></div>
+<div class="signup">PSD: <a href="http://xooplate.com/template/details/11348-clean-elegant-login-form-with-avatar-psd" target="_blank">xooplate</a> - CSS & Edit: <a href="http://forum.turk-oyuncu.com/" target="_blank">Cemal Taşkıran</a></div>
+-->
+</body>
+</html>

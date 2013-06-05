@@ -1,0 +1,451 @@
+<!doctype html>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<title>后台管理系统</title>
+	<link rel="stylesheet" href="stylesheets/layout.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="stylesheets/admin.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="stylesheets/smoothness/jquery-ui-1.10.0.custom.min.css" type="text/css" media="screen">
+	<link rel="stylesheet" type="text/css" href="stylesheets/flexigrid.css">
+	<!--[if lt IE 9]>
+	<link rel="stylesheet" href="css/ie.css" type="text/css" media="screen" />
+	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link rel="stylesheet" href="stylesheets/jqpagination.css" type="text/css" media="screen" />
+	<script type="text/javascript" src="javascripts/jquery-1.9.0.js"></script>
+	<script type="text/javascript" src="javascripts/jquery-ui-1.10.0.custom.min.js"></script>
+
+	<script type="text/javascript" src="javascripts/scripts.js"></script>
+	<script type="text/javascript" src="javascripts/user.js"></script>
+	<script type="text/javascript" src="javascripts/company.js"></script>
+	<script type="text/javascript" src="javascripts/purchase.js"></script>
+	<script type="text/javascript" src="javascripts/sale.js"></script>
+	<script type="text/javascript" src="javascripts/flexigrid.js"></script>
+    <script type="text/javascript">
+
+    </script>
+ </head>
+<body>
+
+	<header id="header">
+		<hgroup>
+			<h1 class="site_title"><a href="/">后台管理系统</a></h1>
+			<h2 class="section_title">主面板</h2>
+			<div class="btn_view_site">
+            			<a href="/logout.node"  >退出登陆</a></div>
+
+		</hgroup>
+	</header> <!-- end of header bar -->
+	
+	<section id="secondary_bar">
+		<div class="user">
+			<p>Lecoa Hua(<a href="#">3 消息</a>)</p>
+			<!-- <a class="logout_user" href="#" title="Logout">Logout</a> -->
+		</div>
+		<div class="breadcrumbs_container">
+			<article class="breadcrumbs"><a href="index.html">后台管理系统</a> <div class="breadcrumb_divider"></div> <a class="current">主面板</a></article>
+		</div>
+	</section><!-- end of secondary bar -->
+	
+	<aside id="sidebar" class="column">
+		<form class="quick_search">
+			<input type="text" value="快速查询" onfocus="if(!this._haschanged){this.value=''};this._haschanged=true;">
+		</form>
+		<hr/>
+		<%if(role == "销售"){%>
+		<h3>销售管理</h3>
+		<ul class="toggle">
+			<li class="icn_new_article"><a href="#" onclick="newPurchase();">采购</a></li>
+			<li class="icn_new_article"><a href="#" onclick="newSell();">销售</a></li>
+			<li class="icn_categories"><a href="#" onclick="purchaseStatistic();">采购统计</a></li>
+			<li class="icn_categories"><a href="#" onclick="saleStatistic();">销售统计</a></li>
+		</ul>
+		<%}%>
+		<%if(role == "财务"){%>
+		<h3>账务管理</h3>
+		<ul class="toggle">
+			<li class="icn_new_article"><a href="#" onclick="showAccountReceivableStatistic();">应收帐款统计</a></li>
+            <li class="icn_new_article"><a href="#" onclick="showAccountPayableStatistic();">待付款统计</a></li>
+			<li class="icn_new_article"><a href="#" onclick="newSell();">销售</a></li>
+			<li class="icn_categories"><a href="#" onclick="saleStatistic();">销售统计</a></li>
+		</ul>
+		<%}%>
+		<%if(role == "经理"){%>
+		<h3>用户管理</h3>
+		<ul class="toggle">
+			<li class="icn_add_user"><a href="#" onclick="createUser();">新增用户</a></li>
+			<li class="icn_view_users"><a href="#" onclick="showUser();">查看用户</a></li>
+			<li class="icn_profile"><a href="#">我的个人信息</a></li>
+		</ul>
+		<h3>合作企业管理</h3>
+		<ul class="toggle">
+			<li class="icn_add_user"><a href="#" onclick="createNewCmp();">新增企业</a></li>
+			<li class="icn_view_users"><a href="#" onclick="showCompany();">查看企业</a></li>
+		</ul>
+		<h3>库存管理</h3>
+		<ul class="toggle">
+			<li class="icn_folder"><a href="#" onclick="showSampleFlow();">样品流向统计</a></li>
+			<li class="icn_photo"><a href="#" onclick="showSellerConsumeRecord();">销售员取货记录</a></li>
+			<li class="icn_audio"><a href="#" onclick="showRepertory();">库存查询</a></li>
+			<li class="icn_audio"><a href="#" onclick="showAnsellGloveRepertory();">Ansell手套库存查询</a></li>
+			<li class="icn_video"><a href="#">Video</a></li>
+		</ul>
+		<%}%>
+		
+		<h3>Admin</h3>
+		<ul class="toggle">
+			<li class="icn_settings"><a href="#">Options</a></li>
+			<li class="icn_security"><a href="#">Security</a></li>
+			<li class="icn_jump_back"><a href="#">Logout</a></li>
+		</ul>
+	</aside><!-- end of sidebar -->
+	
+	<section id="main" class="column">
+		<div class="clear"></div>
+		<article class="module width_full hide" id="new_company_article">
+			<article id="status_article_i" class="module width_full">
+				<header><h3>上传合作企业</h3></header>
+				<div class="module_content" hidden>
+					<form method="post" enctype="multipart/form-data" action="/company_upload.node">
+					  <input type="file" name="thumbnail">
+					  <input type="submit">
+					</form>
+					<div class="clear"></div>
+				</div>
+			</article><!-- end of stats article -->
+			
+			<div class="clear"></div>
+			<header><h3>新增企业</h3></header>
+				<div class="module_content">
+						<form id="new_company_form">
+						<fieldset class="new_user_fieldset float_l">
+							<label for="companyName">公司名称</label><input type="text" name="companyName" id="companyName"></input>
+							<label for="bank">开户银行</label><input type="text" name="bank" id="bank"></input>
+							<label for="address">地址</label><input type="text" name="address" id="address"></input>
+							<label for="comTelephone">公司电话</label><input type="text" name="comTelephone" id="comTelephone"></input>
+							<label for="mobilePhone">联系电话(手机)</label><input type="text" name="mobilePhone" id="mobilePhone"></input>					
+							<label for="fax">传真</label><input type="text" name="fax" id="fax"></input>
+							<label for="postcode">邮编</label><input type="text" name="postcode" id="postcode"></input>
+						</fieldset>
+						
+						<fieldset class="new_user_fieldset float_r">
+							<label for="businessType">业务合作类型</label>
+							<select name="businessType" id="businessType" class="dropkick">
+								<option value="合作公司" selected="selected">合作公司</option>
+								<option value="物流、货运、快递">物流、货运、快递</option>
+								<option value="社保、公积金、税">社保、公积金、税</option>
+								<option value="代理商">代理商</option>
+								<option value="网站、软件">网站、软件</option>
+								<option value="其它">其它</option>
+							</select>
+							<label for="bankAccount">帐号</label><input type="text" name="bankAccount" id="bankAccount"></input>
+							<label for="tax">税号</label><input type="text" name="tax" id="tax"></input>
+							<label for="linkman">联系人</label><input type="text" name="linkman" id="linkman"></input>
+							<label for="telephone">联系电话(座机)</label><input type="text" name="telephone" id="telephone"></input>
+							<label for="other">其它</label><input type="text" name="other" id="other"></input>
+							<label for="description">备注</label><input type="text" name="description" id="description"></input>
+						</fieldset>
+						<fieldset class="new_user_fieldset float_r align_center">
+							<input type="reset" value="重置"></input><input type="button" value="提交" onclick="newCompany()"></input>
+						</fieldset>
+						</form>
+						<div class="clear"></div>
+				</div>
+		</article><!-- end of post new purchase order -->
+		
+		
+		<div class="clear"></div>
+		
+			
+		<article class="module width_full hide" id="sale_statistic_article">
+			<header><h3>销售统计</h3></header>
+			<div>
+			<form>
+				<label>公司名称：</label><input type="text" id="cmpNameSearchInput4Sale"></input>
+				<label>起始日期：</label><input type="text" id="startDateSearchInput4Sale"></input>
+				<label>截止日期：</label><input type="text" id="endDateSearchInput4Sale"></input>
+				<input type="button"  value="查询" onclick="querySaleStatisticByCnd();">
+			</form>
+			</div>
+			<div class="tab_container">
+			<div id="tab1" class="tab_content">
+			<table class="tablesorter hide" cellspacing="0" id="sale_statistic_list_table"></table>
+			</div>
+		</div>
+		</article><!-- end of post new purchase order -->
+		
+		
+		<div class="clear"></div>
+		
+			
+		<article class="module width_full hide" id="unreceive_sale_statistic_article">
+			<header><h3>应收帐款统计</h3></header>
+			<div>
+			<form>
+				<label>公司名称：</label><input type="text" id="cmpNameSearchInput4UnReceive"></input>
+				<label>起始日期：</label><input type="text" id="startDateSearchInput4UnReceive"></input>
+				<label>截止日期：</label><input type="text" id="endDateSearchInput4UnReceive"></input>
+				<input type="button"  value="查询" onclick="queryUnReceiveSaleStatisticByCnd();">
+			</form>
+			</div>
+			<div class="tab_container">
+			<div id="tab1" class="tab_content">
+			<table class="tablesorter hide" cellspacing="0" id="unreceive_sale_statistic_list_table"></table>
+			</div>
+		</div>
+		</article><!-- end of post new purchase order -->
+
+
+        <article class="module width_full hide" id="unpaid_sale_statistic_article">
+            <header><h3>待付款统计</h3></header>
+            <div>
+                <form>
+                    <label>公司名称：</label><input type="text" id="cmpNameSearchInput4UnPay"></input>
+                    <label>起始日期：</label><input type="text" id="startDateSearchInput4UnPay"></input>
+                    <label>截止日期：</label><input type="text" id="endDateSearchInput4UnPay"></input>
+                    <input type="button"  value="查询" onclick="queryUnPaySaleStatisticByCnd();">
+                </form>
+            </div>
+            <div class="tab_container">
+                <div id="tab1" class="tab_content">
+                    <table class="tablesorter hide" cellspacing="0" id="unpaid_sale_statistic_list_table"></table>
+                </div>
+            </div>
+        </article><!-- end of post new purchase order -->
+
+
+
+        <div class="clear"></div>
+		<article class="module width_full hide" id="purchase_statistic_article">
+			<header><h3>采购统计</h3></header>
+			<div>
+			<form>
+				<label>公司名称：</label><input type="text" id="cmpNameSearchInput4Pur"></input>
+				<label>起始日期：</label><input type="text" id="startDateSearchInput4Pur"></input>
+				<label>截止日期：</label><input type="text" id="endDateSearchInput4Pur"></input>
+				<input type="button"  value="查询" onclick="queryPurStatisticByCnd();">
+			</form>
+			</div>
+				<div class="tab_container">
+			<table class="tablesorter" cellspacing="0" id="purchase_statistic_list_table"></table>
+		</div>
+		</article><!-- end of post new purchase order -->
+		
+		<div class="clear"></div>
+		<article class="module width_full hide" id="employee_list_article">
+			<header><h3>用户列表</h3></header>
+			<div class="tab_container">
+				<div id="user_list_table_div">
+					<table class="tablesorter hide" cellspacing="0" id="user_list_table"></table>
+				</div><!-- end of #user_list_table_div -->
+			</div><!-- end of .tab_container -->
+		</article><!-- end of employee_list_article article -->
+		
+		<div class="clear"></div>
+		
+		<article class="module width_full hide" id="company_list_article">
+			<header><h3>合作公司列表</h3></header>
+			<div>
+			<form>
+				<label>公司名称：</label><input type="text" id="cmpNameSearchInput4Cmp"></input>
+				<input type="button"  value="查询" onclick="queryCmpByCnd();">
+			</form>
+			</div>
+			<div class="tab_container">
+				<div id="user_list_table_div">
+					<table class="tablesorter" cellspacing="0" id="company_list_table"></table>
+				</div><!-- end of #user_list_table_div -->
+			</div><!-- end of .tab_container -->
+		</article><!-- end of employee_list_article article -->
+		
+		<div class="clear"></div>
+		
+		
+		<article class="module width_full hide" id="new_purchase_article">
+			<article id="status_article_i" class="module width_full">
+				<header><h3>上传采购记录</h3></header>
+				<div class="module_content" hidden>
+					<form method="post" enctype="multipart/form-data" action="/purchase_upload.node">
+					  <input type="file" name="thumbnail">
+					  <input type="submit">
+					</form>
+					<div class="clear"></div>
+				</div>
+			</article><!-- end of stats article -->
+			
+			<div class="clear"></div>
+			<header><h3>新增采购</h3></header>
+				<div class="module_content">
+						<form action="/newpurchase.node" method="post" id="new_purchase_form">
+						<fieldset class="new_user_fieldset float_l">
+							<label for="purchaseDate">进货时间</label><input type="text" name="purchaseDate" id="purchaseDate"></input>
+							<label for="buyer">进货单位</label><input type="text" name="buyer" id="buyer"></input>
+							<label for="name">品名</label><input type="text" name="name" id="name"></input>
+							<label for="amount">数量</label><input type="text" name="amount" id="amount"></input>
+							<label for="unitPrice">单价</label><input type="text" name="unitPrice" id="unitPrice"></input>						
+							<label for="receiveTime">收货时间</label><input type="text" name="receiveTime" id="receiveTime"></input>
+							<label for="paymentType">付款方式</label><input type="text" name="paymentType" id="paymentType"></input>
+							<label for="invoiceMoney">发票金额</label><input type="text" name="invoiceMoney" id="invoiceMoney"></input>
+							<label for="description">备注</label><input type="text" name="description" id="description"></input>
+						</fieldset>
+						
+						<fieldset class="new_user_fieldset float_r">
+							<label for="brand">品牌</label><input type="text" name="brand" id="brand"></input>
+							<label for="model">型号</label><input type="text" name="model" id="model"></input>
+							<label for="unit">单位</label><input type="text" name="unit" id="unit"></input>
+							<label for="totalMoney">金额</label><input type="text" name="totalMoney" id="totalMoney"></input>
+							<label for="enterOrder">入库单号</label><input type="text" name="enterOrder" id="enterOrder"></input>
+							<label for="payTime">付款时间</label><input type="text" name="payTime" id="payTime"></input>
+							<label for="taxOrder">税票号</label><input type="text" name="taxOrder" id="taxOrder"></input>
+							<label for="receiveInvoiceTime">收票时间</label><input type="text" name="receiveInvoiceTime" id="receiveInvoiceTime"></input>
+							<label for="express">快递</label><input type="text" name="express" id="express"></input>
+						</fieldset>
+						<fieldset class="new_user_fieldset float_r align_center">
+							<input type="reset" value="重置"></input><input type="button" value="提交" onclick="newPurchaseOrder();"></input>
+						</fieldset>
+						</form>
+						<div class="clear"></div>
+				</div>
+		</article><!-- end of post new purchase order -->
+		
+		
+		<article class="module width_full hide" id="new_sell_article">
+			<article id="status_article_i" class="module width_full">
+				<header><h3>上传销售记录</h3></header>
+				<div class="module_content" hidden>
+					<form method="post" enctype="multipart/form-data" action="/sale_statistic_upload.node">
+					  <input type="file" name="thumbnail">
+					  <input type="submit">
+					</form>
+					<div class="clear"></div>
+				</div>
+			</article><!-- end of stats article -->
+			
+			<div class="clear"></div>
+			<header><h3>新增销售</h3></header>
+				<div class="module_content">
+						<form action="/newsell.node" method="post" id="new_sell_form">
+						<fieldset class="new_user_fieldset float_l">
+							<label for="seller">发货日期</label><input type="text" name="shipmentDate" id="shipmentDate"></input>
+							<label for="brand">品牌</label><input type="text" name="brand" id="brand"></input>
+							<label for="model">型号</label><input type="text" name="model" id="model"></input>
+							<label for="unit">单位</label><input type="text" name="unit" id="unit"></input>
+							<label for="totalMoney">金额</label><input type="text" name="totalMoney" id="totalMoney"></input>
+							<label for="receiveMoneyTime">收款时间</label><input type="text" name="receiveMoneyTime" id="receiveMoneyTime"></input>
+							<label for="sellType">出货方式</label><input type="text" name="shipmentType" id="shipmentType"></input>
+							<label for="unpayAmount">未付金额</label><input type="text" name="unpayAmount" id="unpayAmount"></input>
+							<label for="shipmentType">出货方式</label><input type="text" name="shipmentType" id="shipmentType"></input>
+							<label for="receiverPhone">收货人电话</label><input type="text" name="receiverPhone" id="receiverPhone"></input>
+							<label for="transpotOrder">运单号</label><input type="text" name="transpotOrder" id="transpotOrder"></input>
+							<label for="taxAmount">税票金额</label><input type="text" name="taxAmount" id="taxAmount"></input>
+							<label for="invoiceExpressOrder">发票快递单号</label><input type="text" name="invoiceExpressOrder" id="invoiceExpressOrder"></input>
+							<label for="description">备注</label><input type="text" name="description" id="description"></input>
+							<label for="salesman">销售员</label><input type="text" name="salesman" id="salesman"></input>
+						</fieldset>
+						
+						<fieldset class="new_user_fieldset float_r">
+							<label for="seller">出货公司</label><input type="text" name="seller" id="seller"></input>
+							<label for="name">品名</label><input type="text" name="name" id="name"></input>
+							<label for="amount">数量</label><input type="text" name="amount" id="amount"></input>
+							<label for="unitPrice">单价</label><input type="text" name="unitPrice" id="unitPrice"></input>		
+							<label for="actualCost">成本</label><input type="text" name="actualCost" id="actualCost"></input>
+							<label for="receiveMoneyType">收款方式</label><input type="text" name="receiveMoneyType" id="receiveMoneyType"></input>
+							<label for="payAmount">付款金额</label><input type="text" name="payAmount" id="payAmount"></input>
+							<label for="shipmentOrder">出库单号</label><input type="text" name="shipmentOrder" id="shipmentOrder"></input>
+							<label for="receiver">收货人</label><input type="text" name="receiver" id="receiver"></input>
+							<label for="receiveAddress">收货地址</label><input type="text" name="receiveAddress" id="receiveAddress"></input>
+							<label for="taxOrder">税票号</label><input type="text" name="taxOrder" id="taxOrder"></input>
+							<label for="makeInvoiceTime">出票时间</label><input type="text" name="makeInvoiceTime" id="makeInvoiceTime"></input>
+							<label for="source">来源</label><input type="text" name="source" id="source"></input>
+							<label for="category">类别</label><input type="text" name="category" id="category"></input>
+						</fieldset>
+						<fieldset class="new_user_fieldset float_r align_center">
+							<input type="reset" value="重置"></input><input type="button" value="提交" onclick="newSaleOrder();"></input>
+						</fieldset>
+						</form>
+						<div class="clear"></div>
+				</div>
+		</article><!-- end of post new purchase order -->
+		
+		
+		<article class="module width_full hide" id="new_employee_article">
+			<header><h3>创建新用户</h3></header>
+				<div class="module_content">
+						<form action="/newemployee.node"  id="new_employee_form">
+						<fieldset class="new_user_fieldset float_l">
+							<label for="username">姓名</label><input type="text" name="username" id="username"></input><br/>
+							<label for="telephone">座机电话</label><input type="text" name="telephone" id="telephone"></input><br/>
+							<label for="address">地址</label><input type="text" name="address" id="address"></input><br/>
+                            <label for="password">密码</label><input type="password" name="password" id="password" placeholder="密码由数字或字母组成"></input><br/>
+						</fieldset>
+						
+						<fieldset class="new_user_fieldset float_r">
+							<label for="mobilephone">移动电话</label><input type="text" name="mobilephone" id="mobilephone"></input><br/>
+							<label for="email">邮箱</label><input type="text" name="email" id="email"></input><br/>
+							<label>角色</label><select id="roleselector"  class="dropkick">
+                                <option value="销售">销售</option>
+                                <option value="财务">财务</option>
+                                <option value="经理">经理</option>
+							</select><br/>
+                            <label for="repassword">再次输入密码</label><input type="password" name="repassword" id="repassword"></input><br/>
+						</fieldset>
+						<fieldset class="new_user_fieldset float_r align_center">
+							<input type="reset" value="重置"></input><input type="button" value="提交" onclick="newEmployee()"></input>
+						</fieldset>
+						</form>
+						<div class="clear"></div>
+				</div>
+		</article><!-- end of post new employee -->
+		
+		
+		
+		<article class="module width_full hide" id="repertory_list_article">
+			<header><h3>库存</h3></header>
+			<div class="tab_container">
+				<div id="user_list_table_div">
+					<table class="tablesorter" cellspacing="0" id="repertory_list_table"></table>
+				</div><!-- end of #user_list_table_div -->
+			</div><!-- end of .tab_container -->
+		</article><!-- end of employee_list_article article -->
+		
+		<div class="clear"></div>
+		
+		
+		<article class="module width_full hide" id="ansell_glove_list_article">
+			<header><h3>ansell手套库存</h3></header>
+			<div class="tab_container">
+				<div id="user_list_table_div">
+					<table class="tablesorter" cellspacing="0" id="ansell_glove_list_table"></table>
+				</div><!-- end of #user_list_table_div -->
+			</div><!-- end of .tab_container -->
+		</article><!-- end of employee_list_article article -->
+		
+		<div class="clear"></div>
+		
+		
+		<article class="module width_full hide" id="sample_list_article">
+			<header><h3>样品流向</h3></header>
+			<div class="tab_container">
+				<div id="user_list_table_div">
+					<table class="tablesorter" cellspacing="0" id="sample_list_table"></table>
+				</div><!-- end of #user_list_table_div -->
+			</div><!-- end of .tab_container -->
+		</article><!-- end of employee_list_article article -->
+		
+		<div class="clear"></div>
+		
+		
+		<article class="module width_full hide" id="seller_consume_list_article">
+			<header><h3>销售员取货</h3></header>
+			<div class="tab_container">
+				<div id="user_list_table_div">
+					<table class="tablesorter" cellspacing="0" id="seller_consume_list_table"></table>
+				</div><!-- end of #user_list_table_div -->
+			</div><!-- end of .tab_container -->
+		</article><!-- end of employee_list_article article -->
+		
+		<div class="clear"></div>
+	</section>
+</body>
+
+</html>

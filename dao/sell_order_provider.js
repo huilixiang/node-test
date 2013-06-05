@@ -19,6 +19,22 @@ SellOrderProvider.prototype.getCollection = function(callback) {
 	});
 };
 
+SellOrderProvider.prototype.statisticExitRecord = function(callback) {
+    this.getCollection(function(error , sell_collection){
+        if(error)  {
+            callback(error);
+        } else {
+            sell_collection.group({brand:1 , name:1 , model:1 , unitPrice:1} ,
+                {},{count : 0}  , function (obj, prev) { prev.count += obj.amount; },
+                true , function(error , results) {
+                    callback(error , results);
+                }
+            );
+        }
+    });
+}
+
+
 SellOrderProvider.prototype.queryShipmentCmp = function(callback) {
     this.getCollection(function(error , sell_collection){
          if(error) {

@@ -18,6 +18,20 @@ PurchaseOrderProvider.prototype.getCollection = function(callback) {
 	
 	});
 };
+PurchaseOrderProvider.prototype.statisticEnterRecord = function(callback) {
+     this.getCollection(function(error , purchase_collection){
+               if(error)  {
+                   callback(error);
+               } else {
+                   purchase_collection.group({brand:1 , name:1 , model:1 , unitPrice:1} ,
+                       {},{count : 0}  , function (obj, prev) { prev.count += obj.amount; },
+                      true , function(error , results) {
+                           callback(error , results);
+                       }
+                   );
+               }
+     });
+}
 
 PurchaseOrderProvider.prototype.findAll = function(callback) {
 	this.getCollection(function(error , purchase_collection) {

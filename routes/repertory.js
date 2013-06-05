@@ -3,14 +3,54 @@ var RepertoryProvider = require('../dao/repertory_provider').RepertoryProvider ,
           , AnsellGloveRepertoryProvider = require('../dao/ansell_glove_provider').AnsellGloveRepertoryProvider
           , SampleRepertoryProvider = require('../dao/sample_repertory_provider').SampleRepertoryProvider
           , SellerConsumeRecordProvider = require('../dao/seller_consume_provider').SellerConsumeRecordProvider
-          , XLSX = require("xlsx") , BufferHelper = require("bufferhelper");
+          , XLSX = require("xlsx") , BufferHelper = require("bufferhelper"),
+                    SellOrderProvider = require('../dao/sell_order_provider').SellOrderProvider ,
+        PurchaseOrderProvider = require('../dao/purchase_order_provider').PurchaseOrderProvider;
 
 var repertoryProvider = new RepertoryProvider();
 var ansellGloveProvider = new AnsellGloveRepertoryProvider();
 var sampleProvider = new SampleRepertoryProvider();
 var sellerConsumeRecordProvider = new SellerConsumeRecordProvider();
+var sellDao = new SellOrderProvider() , purchaseDao = new   PurchaseOrderProvider();
 exports.enter = function(req , res) {
 
+
+}
+
+exports.statistic = function(req , res) {
+       purchaseDao.statisticEnterRecord(function(error , enterRecords){
+           if(error) {
+               res.send(error);
+           }  else {
+               sellDao.statisticExitRecord(function(error , exitRecords){
+                  if(error) {
+                      res.send(error);
+                  }  else {
+                      var len = enterRecords.length;
+                      var arr = new Array();
+                      for(var i=0; i<len; ++i) {
+                          var enterR = enterRecords[i];
+                          var keyR = enterR.brand+enterR.name+enterR.model+enterR.unitPrice;
+                          arr[keyR] = enterR.count;
+                      }
+                      len =  exitRecords.length;
+                      for(var i=0; i<len; ++i) {
+                          var exitR = exitRecords[i];
+                          var key = exitR.brand+exitR.name+exitR.model+exitR.unitPrice;
+                          var value = arr[key];
+                          if(value == null) {
+                              //console.warn(exitR);
+                              continue;
+                          }
+                          arr[key] = value - exitR.count;
+                          console.log("key:"+key+"------value:"+arr[key]);
+                      }
+
+                      res.json(arr);
+                  }
+               }) ;
+           }
+       });
 
 }
 

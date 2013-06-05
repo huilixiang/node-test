@@ -1,14 +1,19 @@
 /**
  * New node file
  */
-var mongodb = require('mongodb'); 
-var db_info = require('../db_info');
-
+var mongodb = require('mongodb') , db_info = require('../db_info') , async = require('async');
 RepertoryProvider = function() {
 	var mongoserver = new mongodb.Server(db_info.host, db_info.port, {auto_reconnect:true});
 	this.connector = new mongodb.Db("admin", mongoserver, {safe:false});
 	this.connector.open(function(){});
 };
+
+RepertoryProvider.prototype.statistic = function(callback) {
+
+
+
+}
+
 RepertoryProvider.prototype.getCollection = function(callback) {
 	this.connector.collection('repertory' , function(error , repertory_collection){
 		if(error)
@@ -46,11 +51,9 @@ RepertoryProvider.prototype.save = function(repertorys , callback) {
 			for(var i=0,len=repertorys.length; i<len; ++i) {
 				repertory = repertorys[i];
 				repertory.createDate = new Date();
-				if(repertory.employess == undefined)
-					repertory.employess = [];
 			}
-			repertory_collection.insert(repertorys , function(){
-				callback(null , repertorys);
+			repertory_collection.insert(repertorys , function(errors , repertorys){
+				callback(errors , repertorys);
 			});
 		} 
 	});
@@ -66,7 +69,8 @@ RepertoryProvider.prototype.pagedAll = function(startIndex , pageSize ,  orderPo
 		   		if(error) {
 		   		   callback(error);
 		   		} else {
-				   repertory_collection.find({} , {'skip':startIndex , 'limit':pageSize , 'order':orderPop}).toArray(function(error , results){
+				   repertory_collection.find({} , {'skip':startIndex , 'limit':pageSize , 'order':orderPop})
+                       .toArray(function(error , results){
 				   		if(error)
 				   		   callback(error);
 				   		else 

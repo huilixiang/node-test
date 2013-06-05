@@ -20,6 +20,18 @@ UserProvider.prototype.getCollection = function(callback) {
 	});
 };
 
+UserProvider.prototype.findByUsername = function(username , callback) {
+    this.getCollection(function(error , user_col){
+       if(error) {
+          callback(error);
+       } else {
+            user_col.findOne({username : username} , function(error , user){
+                callback(error , user);
+            });
+       }
+    }) ;
+}
+
 UserProvider.prototype.findAll = function(callback) {
 	this.getColection(function(error , user_collection) {
 		if(error) {
